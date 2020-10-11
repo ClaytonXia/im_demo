@@ -105,6 +105,23 @@ func (s *IMServer) Send(idStr string, message []byte) {
 	logrus.Printf("sending to: %s complete", idStr)
 }
 
+// Broadcast _
+func (s *IMServer) Broadcast(selfConnID string, message []byte) {
+	logrus.Printf("broadcasting message: %s", string(message))
+	s.mutex.RLock()
+	defer s.mutex.RUnlock()
+
+	for _, tmpConn := range s.connMap {
+		if tmpConn.ID == selfConnID {
+			continue
+		}
+		err := tmpConn.write(websocket.TextMessage, message)
+		if err != nil {
+			logrus.Errorf("conn write err: %s", err.Error())
+		}
+	}
+}
+
 // ConnList _
 // 在线列表
 func (s *IMServer) ConnList(selfID string) (connList []string) {

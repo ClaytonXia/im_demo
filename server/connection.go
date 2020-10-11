@@ -78,7 +78,13 @@ func (conn *IMConnection) refreshMsg() {
 			break
 		}
 		msgBody = "[RESPONSE]" + msgBody
-		conn.Server.Send(user, []byte(msgBody))
+		if strings.TrimSpace(user) == "*" {
+			// 广播
+			conn.Server.Broadcast(conn.ID, []byte(msgBody))
+		} else {
+			// 单播
+			conn.Server.Send(user, []byte(msgBody))
+		}
 	}
 }
 
