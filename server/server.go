@@ -98,8 +98,6 @@ func (s *IMServer) Send(idStr string, message []byte) {
 		if err != nil {
 			logrus.Errorf("conn write err: %s", err.Error())
 		}
-	} else {
-		logrus.Fatal("nil client conn")
 	}
 
 	logrus.Printf("sending to: %s complete", idStr)
