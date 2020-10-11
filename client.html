@@ -38,11 +38,6 @@
                 if (!ws) {
                     return false;
                 }
-                if (user.value.length == 0) {
-                    alert("empty receiver")
-                    return false;
-                }
-                print("[SEND]" + user.value + ' ' + input.value);
                 ws.send(user.value + ' ' +input.value + "\n");
                 return false;
             };
@@ -64,7 +59,7 @@
                 <form>
                     <button id="open">Open</button>
                     <button id="close">Close</button>
-                    <input type="text" id="to_user" placeholder="user_id, * means broadcast">
+                    <input type="text" id="to_user" placeholder="user_id, default broadcast">
                     <input id="input" type="text" value="Hello world!">
                     <button id="send">Send</button>
                 </form>

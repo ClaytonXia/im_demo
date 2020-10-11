@@ -73,12 +73,12 @@ func (conn *IMConnection) refreshMsg() {
 			logrus.Fatal("message parse error:", err.Error())
 			break
 		}
-		if len(user) == 0 || len(msgBody) == 0 {
-			logrus.Warnln("nil user or msg", user, msgBody)
-			break
+		if len(msgBody) == 0 {
+			logrus.Warnln("nil msg", msgBody)
+			continue
 		}
 		msgBody = "[RESPONSE]" + msgBody
-		if strings.TrimSpace(user) == "*" {
+		if strings.TrimSpace(user) == "" {
 			// 广播
 			conn.Server.Broadcast(conn.ID, []byte(msgBody))
 		} else {
